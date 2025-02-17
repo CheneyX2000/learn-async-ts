@@ -24,4 +24,3 @@ for (let i = 0; i < 100; i++) {
 console.log("End of script");
 
 console.log("a lot of other things ...");
-  

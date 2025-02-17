@@ -5,7 +5,7 @@ function doStep1(init: number, callback: (result: number) => void) {
     }, 0);
   }
   
-  function doStep2(init: number, callback: (result: number) => void) {
+function doStep2(init: number, callback: (result: number) => void) {
     const result = init + 2;
     callback(result);
   }
@@ -27,4 +27,3 @@ function doStep1(init: number, callback: (result: number) => void) {
   }
   
   doOperation(10);
-  

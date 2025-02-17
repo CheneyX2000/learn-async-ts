@@ -1,4 +1,21 @@
 /**
+ * calculate the sum of all numbers in the 2D array.
+ * @param arr 2D array of numbers
+ * @returns the sum of all numbers in the 2D array
+ */
+function calculateSum(arr: number[][]): number {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+            console.log(`Adding ${arr[i][j]} to sum`);
+            sum += arr[i][j];
+        }
+    }
+    console.log('returning from sum');
+    return sum;
+}
+
+/**
  * An asynchronous function that sums all numbers in a 2D array
  * @param arr 2D array of numbers
  * @returns a promise that resolves to the sum of all numbers in the 2D array
@@ -8,25 +25,10 @@ function sum2DArray(arr: number[][]): Promise<number> {
     return new Promise((resolve, reject) => {
         console.log('Sum called ... ');
         if(arr.length === 0) {
-            reject('Cannot sum an empty array');
+            return reject('Cannot sum an empty array');
         }
-        /** schedule the execution of the function to the next event loop cycle.
-         * This is done using setTimeout() to simulate an asynchronous operations.
-         * 
-         * Replace the logic in the setTimeout() with the actual logic to sum the numbers
-         * to understand the difference in execution with and without setTimeout()
-         **/
-        setTimeout(() => {
-            let sum = 0;
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = 0; j < arr[i].length; j++) {
-                    console.log(`Adding ${arr[i][j]} to sum`);
-                    sum += arr[i][j];
-                }
-            }
-            resolve(sum);
-        }, 0);
-        console.log('returning from sum');
+        const sum = calculateSum(arr);
+        resolve(sum);
     });
 }
 
@@ -37,8 +39,10 @@ const array2D = [
     [7, 8, 9]
 ];
 
-const sumPromise1 = sum2DArray(array2D);
-console.log('sumPromise1:', sumPromise1);
+const sumPromise1 = sum2DArray(array2D)
+    .then(total => console.log('sumPromise1:', total))
+    .catch(error => console.error('Error:', error));
 
-const sumPromise2 = sum2DArray([]);
-console.log('sumPromise2:', sumPromise2);
+const sumPromise2 = sum2DArray([])
+    .then(total => console.log('sumPromise2:', total))
+    .catch(error => console.log('Error', error));

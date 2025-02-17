@@ -34,78 +34,44 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var aliceTumbling1 = [
-    { transform: 'rotate(0) scale(1)' },
-    { transform: 'rotate(360deg) scale(0)' }
-];
-var aliceTiming1 = {
-    duration: 2000,
-    iterations: 1,
-    fill: 'forwards'
-};
-var alice10 = document.querySelector("#alice1");
-var alice20 = document.querySelector("#alice2");
-var alice30 = document.querySelector("#alice3");
-function animateAlice() {
+/**
+ * An asynchronous function that sums all numbers in a 2D array
+ * @param arr 2D array of numbers
+ * @returns a promise that resolves to the sum of all numbers in the 2D array
+ * or rejects if the array is empty
+ */
+function sum1DArray(arr, rowIdx) {
     return __awaiter(this, void 0, void 0, function () {
-        var err_1;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 6, , 7]);
-                    if (!(alice10 && alice20 && alice30)) return [3 /*break*/, 4];
-                    return [4 /*yield*/, alice10.animate(aliceTumbling1, aliceTiming1).finished];
-                case 1:
-                    _a.sent();
-                    return [4 /*yield*/, alice20.animate(aliceTumbling1, aliceTiming1).finished];
-                case 2:
-                    _a.sent();
-                    return [4 /*yield*/, alice30.animate(aliceTumbling1, aliceTiming1).finished];
-                case 3:
-                    _a.sent();
-                    return [3 /*break*/, 5];
-                case 4:
-                    console.warn("#alice not found");
-                    _a.label = 5;
-                case 5: return [3 /*break*/, 7];
-                case 6:
-                    err_1 = _a.sent();
-                    alert("Error when animating: ".concat(err_1.message));
-                    return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+            console.log('Sum called ... ');
+            if (arr.length === 0) {
+                throw new Error('Cannot sum an empty array');
             }
+            return [2 /*return*/, new Promise(function (resolve) {
+                    setTimeout(function () {
+                        var sum = 0;
+                        for (var i = 0; i < arr[rowIdx].length; i++) {
+                            console.log("Adding ".concat(arr[rowIdx][i], " to sum"));
+                            sum += arr[rowIdx][i];
+                        }
+                        resolve(sum);
+                    }, 0);
+                })];
         });
     });
 }
-animateAlice();
-//if (alice10 && alice20 && alice30) {
-//  // Promise chain  
-//  alice10.animate(aliceTumbling1, aliceTiming1).finished  
-//    .then(() => {
-//        return alice20
-//                .animate(aliceTumbling1, aliceTiming1)
-//                .finished;     
-//    })
-//    .then(() => {
-//      return alice30
-//              .animate(aliceTumbling1, aliceTiming1)
-//              .finished;
-//    })
-//    .catch((err) => alert(`Error when promising ... ${err.message}`));
-//}
-//else{
-//  console.warn("#alice not found");
-//}
-//alice10
-//    .animate(aliceTumbling1, aliceTiming1)
-//    .finished
-//    .then((res) => {
-//        console.log(res);
-//        alice20
-//            .animate(aliceTumbling1, aliceTiming1)
-//            .finished
-//            .then((res) => {
-//                console.log(res);
-//                alice30.animate(aliceTumbling1, aliceTiming1);
-//            })
-//    })
+var array2D_1 = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+Promise.all([
+    sum1DArray(array2D_1, 0),
+    sum1DArray(array2D_1, 1),
+    sum1DArray(array2D_1, 2)
+])
+    .then(function (sums) {
+    var finalSum = sums.reduce(function (acc, val) { return acc + val; }, 0);
+    console.log('final sum is: ', finalSum);
+})
+    .catch(function (error) { return console.log(error); });

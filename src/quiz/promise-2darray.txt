@@ -1,4 +1,44 @@
-- Extract the code in the setTimeout function and replace the setTimeout function  with the extracted code. Then run the main script. 
-- Is there a difference in the flow of execution from when the code was in the setTimeout function?
-- Is the flow of execution in both these examples different from the flow of execution with the examples using the fetch() API, which also returns a promise? 
-- If yes, explain the code execution difference. Add your explanation to this file.
+The flow of execution changed after the extraction of setTimeout.
+
+BEFORE extracting the code, the output is:
+Sum called ...
+Sum called ...
+Error Cannot sum an empty array
+Adding 1 to sum
+Adding 2 to sum
+Adding 3 to sum
+Adding 4 to sum
+Adding 5 to sum
+Adding 6 to sum
+Adding 7 to sum
+Adding 8 to sum
+Adding 9 to sum
+returning from sum
+sumPromise1: 45
+
+AFTER extracting, the output is:
+Sum called ... 
+Adding 1 to sum
+Adding 2 to sum
+Adding 3 to sum
+Adding 4 to sum
+Adding 5 to sum
+Adding 6 to sum
+Adding 7 to sum
+Adding 8 to sum
+Adding 9 to sum
+returning from sum
+Sum called ...
+sumPromise1: 45
+Error Cannot sum an empty array
+
+Appearantly, after the modification, the sumPromise1 is firstly executed and firstly ouput.
+After the sumPromise1 is entirely done, the sumPromise2 is executed.
+This is because setTimeout() introduces a task delay, deferring the sum logic to the next event loop cycle.
+Removing setTimeout() makes the summation happen immediately and resolves the Promise right away.
+The ".then()" is still async, but it's a microtask that runs before the next task.
+
+However, if we use fetch(), the code will be truly async in the sense that fetch() will be a network request,
+so the Promise resolves only when data is received, unlike the forced or immediate approaches of the other two.
+And the resolution time is indeterminate, depends on real server response.
+In that case, the flow of execution would be unpredictable and different than the given 2 cases.
